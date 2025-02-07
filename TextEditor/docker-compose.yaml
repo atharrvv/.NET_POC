@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  text-editor-app:
+    image: texteditor
+    build: .
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=texteditor_sql-server-container_1;Database=TextEditor_Data;User Id=sa;Password=YourStrongPassword123;TrustServerCertificate=True;
+    ports:
+      - "8080:80"
+    depends_on:
+      - sql-server-container
+
+  sql-server-container:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrongPassword123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
