@@ -7,18 +7,48 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TextEditor.styles.css" asp-append-version="true" />
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/u7ysyj1zrr7vswyjpiguf0gvkpwwg2ig2jni7m9vhbkffcsm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
     <script>
-        tinymce.init({
-            selector: 'textarea#tiny',
-                    plugins: [
-                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
-                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
-                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+
+      tinymce.init({
+
+        selector: 'textarea#tiny',
+
+            plugins: [
+
+              'a11ychecker', 'accordion', 'advlist', 'anchor', 'autolink', 'autosave',
+
+              'charmap', 'code', 'codesample', 'directionality', 'emoticons', 'exportpdf',
+
+              'exportword', 'fullscreen', 'help', 'image', 'importcss', 'importword',
+
+              'insertdatetime', 'link', 'lists', 'markdown', 'math', 'media', 'nonbreaking',
+
+              'pagebreak', 'preview', 'quickbars', 'save', 'searchreplace', 'table',
+
+              'visualblocks', 'visualchars', 'wordcount'
+
             ],
-            toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
-                'bullist numlist checklist outdent indent | removeformat | code table help'
-        })
+
+            toolbar: 'undo redo | accordion accordionremove | ' +
+
+              'importword exportword exportpdf | math | ' +
+
+              'blocks fontfamily fontsize | bold italic underline strikethrough | ' +
+
+              'align numlist bullist | link image | table media | ' +
+
+              'lineheight outdent indent | forecolor backcolor removeformat | ' +
+
+              'charmap emoticons | code fullscreen preview | save print | ' +
+
+              'pagebreak anchor codesample | ltr rtl',
+
+            menubar: 'file edit view insert format tools table help'
+
+      })
+
     </script>
 </head>
 <body>
