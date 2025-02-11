@@ -52,14 +52,14 @@ pipeline {
     }
     stage ('Migration to another server') {
       steps {
-        scripts {
+        script {
           sh "scp application.tar clone:~/"
         }
       }
     }
     stage ('Loading the image from .tar') {
       steps {
-        scripts {
+        script {
           sh """ ssh clone "docker load -i ~/application.tar" """
         }
       }
