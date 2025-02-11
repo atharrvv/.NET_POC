@@ -46,14 +46,14 @@ pipeline {
     stage ('Application save') {
       steps {
         script {
-          sh "docker save -o application.tar application"
+          sh "docker save -o  application.tar application"
         }
       }
     }
     stage ('Migration to another server') {
       steps {
         script {
-          sh "scp application.tar clone:~/"
+          sh "scp -o StrictHostKeyChecking=no application.tar clone:~/"
         }
       }
     }
