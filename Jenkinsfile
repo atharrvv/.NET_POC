@@ -46,7 +46,7 @@ pipeline {
     stage ('Application save') {
       steps {
         script {
-          sh "docker save -o applicatin.tar application"
+          sh "docker save -o application.tar application"
         }
       }
     }
