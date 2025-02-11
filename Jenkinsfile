@@ -53,7 +53,7 @@ pipeline {
     stage ('Migration to another server') {
       steps {
         script {
-          sh "sudo scp -o StrictHostKeyChecking=no application.tar clone:~/"
+          sh "scp application.tar clone:~/"
         }
       }
     }
