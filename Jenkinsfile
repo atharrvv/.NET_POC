@@ -53,16 +53,16 @@ pipeline {
     stage ('Migration to another server') {
       steps {
         script {
-          sh "scp application.tar clone:~/"
+          sh "scp application.tar clone@20.127.210.47:~/"
         }
       }
     }
-    stage ('Loading the image from .tar') {
-      steps {
-        script {
-          sh """ ssh clone "docker load -i ~/application.tar" """
-        }
-      }
-    }
+    // stage ('Loading the image from .tar') {
+    //   steps {
+    //     script {
+    //       sh """ ssh clone "docker load -i ~/application.tar" """
+    //     }
+    //   }
+    // }
   }  
 }
