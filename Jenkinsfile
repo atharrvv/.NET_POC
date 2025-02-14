@@ -71,10 +71,17 @@ pipeline {
     //     }
     //   }
     // }
-    stage ('Loading the image from .tar') {
+    // stage ('Loading the image from .tar') {
+    //   steps {
+    //     script {
+    //       sh """ ssh clone@20.127.210.47 "sudo docker load -i ~/application.tar" """
+    //     }
+    //   }
+    // }
+    stage ('Application container run on destinatiopn server') {
       steps {
         script {
-          sh """ ssh clone@20.127.210.47 "sudo docker load -i ~/application.tar" """
+          sh """ ssh clone@20.127.210.47 "sudo docker run --name application -d -p 8080:80 application" """
         }
       }
     }
