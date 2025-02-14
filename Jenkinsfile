@@ -74,7 +74,7 @@ pipeline {
     stage ('Loading the image from .tar') {
       steps {
         script {
-          sh """ ssh clone@20.127.210.47 "docker load -i ~/application.tar" """
+          sh """ ssh clone@20.127.210.47 "sudo docker load -i ~/application.tar" """
         }
       }
     }
