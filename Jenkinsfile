@@ -57,33 +57,33 @@ pipeline {
         }
       }
     }
-    stage ('Application save') {
-      steps {
-        script {
-          sh "docker save -o  application.tar application"
-        }
-      }
-    }
-    stage ('Migration to another server') {
-      steps {
-        script {
-          sh "scp application.tar clone@20.127.210.47:~/"
-        }
-      }
-    }
-    stage ('Loading the image from .tar') {
-      steps {
-        script {
-          sh """ ssh clone@20.127.210.47 "sudo docker load -i ~/application.tar" """
-        }
-      }
-    }
-    stage ('Application container run on destinatiopn server') {
-      steps {
-        script {
-          sh """ ssh clone@20.127.210.47 "sudo docker run --name application -d -p 8080:80 application" """
-        }
-      }
-    }
+    // stage ('Application save') {
+    //   steps {
+    //     script {
+    //       sh "docker save -o  application.tar application"
+    //     }
+    //   }
+    // }
+    // stage ('Migration to another server') {
+    //   steps {
+    //     script {
+    //       sh "scp application.tar clone@20.127.210.47:~/"
+    //     }
+    //   }
+    // }
+    // stage ('Loading the image from .tar') {
+    //   steps {
+    //     script {
+    //       sh """ ssh clone@20.127.210.47 "sudo docker load -i ~/application.tar" """
+    //     }
+    //   }
+    // }
+    // stage ('Application container run on destinatiopn server') {
+    //   steps {
+    //     script {
+    //       sh """ ssh clone@20.127.210.47 "sudo docker run --name application -d -p 8080:80 application" """
+    //     }
+    //   }
+    // }
   }  
 }
