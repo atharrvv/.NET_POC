@@ -35,7 +35,7 @@ pipeline {
                 script {
                     // Get public IP
                     def instanceIp = sh(script: "curl -s ifconfig.me", returnStdout: true).trim()
-                    / Update appsettings.json
+                    // Update appsettings.json
                     sh """
                         jq '.ConnectionStrings.DefaultConnection |= sub("Server=[^,]+"; "Server=${instanceIp}")' appsettings.json > appsettings.tmp.json && mv appsettings.tmp.json appsettings.json
                     """
