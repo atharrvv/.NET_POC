@@ -1,89 +1,64 @@
 pipeline {
-  agent any
-  stages {
-    stage ('Databasae Build') {
-      steps {
-        script {
-          docker.build('database', './TextEditor/database')
+    agent any
+    
+    stages {
+        stage('Git Clone') {
+            steps {
+                git branch: 'trial', credentialsId: 'git', url: 'https://github.com/atharrvv/.NET_POC.git'
+            }
         }
-      }
-    }
-    stage ('Database Container') {
-      steps {
-        script {
-          sh "docker run --name database -d -p 1433:1433 database"
+        stage('Database Build') {
+            steps {
+                script {
+                    docker.build('eatherv/database:latest', './TextEditor/database')
+                }
+            }
         }
-      }
-    }
-    // stage ('Database Save') {
-    //   steps {
-    //     script {
-    //       sh ""
-    //     }
-    //   }
-    // }
-    // stage ('Database copy to another server') {
-    //   steps {
-    //     script {
-    //       sh
-    //     }
-    //   }
-    // }
-    // stage ('Database load image') {
-    //   steps {
-    //     script {
-    //       sh ""
-    //     }
-    //   }
-    // }
-    // stage ('Database container run') {
-    //   steps {
-    //     script {
-    //       sh ""
-    //     }
-    //   }
-    // }
-    stage ('Application Build') {
-      steps {
-        script {
-          docker.build('application', './TextEditor/')
+        stage ('DockerHub'){
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker'){
+                        docker.image("eatherv/database:latest").push()
+                    }
+                }
+            }
         }
-      }
-    }
-    stage ('Appliocation container run') {
-      steps {
-        script {
-          sh "docker run --name application -d -p 8080:80 application"
+        stage ('Database Container') {
+            steps {
+                script {
+                    sh "docker run --name database -d -p 1433:1433 eatherv/database:latest"
+                }
+            }
         }
-      }
+        stage ('Inject IP into appsettings.json'){
+            steps {
+                script {
+                    // Get public IP
+                    def instanceIp = sh(script: "curl -s ifconfig.me", returnStdout: true).trim()
+                    / Update appsettings.json
+                    sh """
+                        jq '.ConnectionStrings.DefaultConnection |= sub("Server=[^,]+"; "Server=${instanceIp}")' appsettings.json > appsettings.tmp.json && mv appsettings.tmp.json appsettings.json
+                    """
+                }
+            }
+        }
+        stage ('Backend Build') {
+            steps {
+                script {
+                    docker.image('eatherv/backend:latest', '.TextEditor/')
+                }
+            }
+        }
+        stage ('Backend DockerHub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker'){
+                        docker.image("eatherv/backend:latest").push()
+                    }
+                }
+              }
+            }
+        }
+        
     }
-    // stage ('Application save') {
-    //   steps {
-    //     script {
-    //       sh "docker save -o  application.tar application"
-    //     }
-    //   }
-    // }
-    // stage ('Migration to another server') {
-    //   steps {
-    //     script {
-    //       sh "scp application.tar clone@20.127.210.47:~/"
-    //     }
-    //   }
-    // }
-    // stage ('Loading the image from .tar') {
-    //   steps {
-    //     script {
-    //       sh """ ssh clone@20.127.210.47 "sudo docker load -i ~/application.tar" """
-    //     }
-    //   }
-    // }
-    // stage ('Application container run on destinatiopn server') {
-    //   steps {
-    //     script {
-    //       sh """ ssh clone@20.127.210.47 "sudo docker run --name application -d -p 8080:80 application" """
-    //     }
-    //   }
-    // }
-  }  
 }
