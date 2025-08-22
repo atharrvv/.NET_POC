@@ -55,10 +55,9 @@ pipeline {
                     docker.withRegistry('https://index.docker.io/v1/', 'docker'){
                         docker.image("eatherv/backend:latest").push()
                     }
-                }
+                 }
               }
             }
-        }
         
     }
 }
