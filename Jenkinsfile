@@ -53,7 +53,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'docker'){
-                        docker.image("eatherv/backend:latest").push()
+                        docker.build("eatherv/backend:latest").push()
                     }
                  }
               }
