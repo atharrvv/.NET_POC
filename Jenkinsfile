@@ -58,6 +58,12 @@ pipeline {
                  }
               }
             }
-        
+        stage ('Backend Container') {
+            steps {
+                script {
+                    sh "docker run --name backend -d -p 8080:80 eatherv/backend:latest"
+                }
+            }
+        }
     }
 }
