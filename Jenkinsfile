@@ -37,7 +37,7 @@ pipeline {
                     def instanceIp = sh(script: "curl -s ifconfig.me", returnStdout: true).trim()
                     // Update appsettings.json
                     sh """
-                        jq ".ConnectionStrings.DefaultConnection |= sub(\\"Server=[^,]+\\\\"; \\"Server=${instanceIp}\\")" TextEditor/appsettings.json > TextEditor/appsettings.tmp.json && mv TextEditor/appsettings.tmp.json TextEditor/appsettings.json
+                        jq ".ConnectionStrings.DefaultConnection |= sub(\"Server=[^,]+\"; \"Server=''' + instanceIp + '''\")" TextEditor/appsettings.json > TextEditor/appsettings.tmp.json && mv TextEditor/appsettings.tmp.json TextEditor/appsettings.json
                     """
                 }
             }
