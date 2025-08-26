@@ -28,7 +28,7 @@ pipeline {
         stage ('Backend Build') {
             steps {
                 script {
-                    sh "docker build -t backend ."
+                    sh "docker build -t backend /var/lib/jenkins/workspace/New/TextEditor/"
                     // docker.build('eatherv/backend:latest', './TextEditor/')
                 }
             }
