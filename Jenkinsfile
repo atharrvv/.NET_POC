@@ -2,11 +2,6 @@ pipeline {
     agent any
     
     stages {
-        stage('Git Clone') {
-            steps {
-                git branch: 'trial', credentialsId: 'git', url: 'https://github.com/atharrvv/.NET_POC.git'
-            }
-        }
         stage('Database Build') {
             steps {
                 script {
@@ -14,7 +9,7 @@ pipeline {
                 }
             }
         }
-        stage ('DockerHub'){
+        stage ('Database DockerHub'){
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'docker'){
