@@ -28,7 +28,7 @@ pipeline {
         stage ('Backend Build') {
             steps {
                 script {
-                    sh "sudo  docker build -t backend ."
+                    sh "docker build -t backend ."
                     // docker.build('eatherv/backend:latest', './TextEditor/')
                 }
             }
