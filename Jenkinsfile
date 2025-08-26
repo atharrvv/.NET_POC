@@ -28,7 +28,7 @@ pipeline {
         stage ('Backend Build') {
             steps {
                 script {
-                    docker.image('eatherv/backend:latest', '.TextEditor/')
+                    docker.build('eatherv/backend:latest', '.TextEditor/')
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'docker'){
-                        docker.build("eatherv/backend:latest").push()
+                        docker.image("eatherv/backend:latest").push()
                     }
                  }
               }
