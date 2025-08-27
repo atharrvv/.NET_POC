@@ -17,7 +17,7 @@ pipeline {
                             --severity LOW,MEDIUM,HIGH \
                             --exit-code 0 \
                             --quiet \
-                            --format json -o trivy trivy_image_medium.json
+                            --format json -o trivy_medium.json
                     '''
                 }
             }
