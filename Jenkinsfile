@@ -21,7 +21,7 @@ pipeline {
 
                         
 
-                        trivy image mcr.microsoft.com/mssql/server:2022-latest \
+                        trivy image backend:latest \
                             --severity CRITICAL \
 
 
