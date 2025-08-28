@@ -104,7 +104,7 @@ pipeline {
                         
                         trivy k8s --severity LOW,MEDIUM,HIGH --format json -o namespace_high.json --namespace app --report summary all
                         
-                        trivy k8s --severity CRITICAL --format json -o namespace_critical.json --namespace app --reprot summary all
+                        trivy k8s --severity CRITICAL --format json -o namespace_critical.json --namespace app --report summary all
                     '''
                 }
             }
