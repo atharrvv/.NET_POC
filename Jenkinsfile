@@ -28,8 +28,10 @@ pipeline {
 
                     '''
                 }
-                post {
-                    always {
+            }
+        }
+        post {
+            always {
                         sh '''
                             trivy convert --format template \
                                 --template "/usr/local/share/trivy/html.tpl"
@@ -37,8 +39,6 @@ pipeline {
                         '''
                     }
                 }
-            }
-        }
         
     
 
