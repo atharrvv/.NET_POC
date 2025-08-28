@@ -20,16 +20,22 @@ pipeline {
                             --format json -o trivy_medium.json
 
                         
-
                         trivy image backend:latest \
                             --severity CRITICAL \
                             --quiet \
                             --exit-code 0 \
-                            --format json -o trivy_medium.json 
-
-
+                            --format json -o trivy_critical.json 
 
                     '''
+                }
+                post {
+                    always {
+                        sh '''
+                            trivy convert --format template \
+                                --template "/usr/local/share/trivy/html.tpl"
+                                --output trivy_critical.html trivy_critical.json
+                        '''
+                    }
                 }
             }
         }
