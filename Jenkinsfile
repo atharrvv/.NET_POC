@@ -9,6 +9,7 @@ pipeline {
                 }
             }
         }
+        
         stage ('Image scanning') {
             steps {
                 script {
@@ -17,71 +18,83 @@ pipeline {
                             --severity LOW,MEDIUM,HIGH \
                             --exit-code 0 \
                             --quiet \
-                            --format json -o trivy_medium.json
+                            --format json -o database_trivy_medium.json
 
                         
-                        trivy image backend:latest \
+                        trivy image eatherv/database:latest \
                             --severity CRITICAL \
                             --quiet \
                             --exit-code 0 \
-                            --format json -o trivy_critical.json 
+                            --format json -o database_trivy_critical.json 
 
                     '''
                 }
             }
-             post {
-                always {
-                        sh '''
-                            trivy convert --format template \
-                                --template "/usr/local/share/trivy/html.tpl" \
-                                --output trivy_critical.html trivy_critical.json
-                        '''
-                 }
+        }
+        
+        stage ('Database DockerHub'){
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker'){
+                        docker.image("eatherv/database:latest").push()
+                    }
+                }
             }
         }
         
-
+        stage ('Database Container') {
+            steps {
+                script {
+                    sh "docker run --name database -d -p 1433:1433 eatherv/database:latest"
+                }
+            }
+        }
         
-    
+        stage ('Backend Build') {
+            steps {
+                script {
+                    docker.build('eatherv/backend:latest', './TextEditor/')
+                }
+            }
+        }
 
-        // stage ('Database DockerHub'){
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://index.docker.io/v1/', 'docker'){
-        //                 docker.image("eatherv/database:latest").push()
-        //             }
-        //         }
-        //     }
-        // }
-        // stage ('Database Container') {
-        //     steps {
-        //         script {
-        //             sh "docker run --name database -d -p 1433:1433 eatherv/database:latest"
-        //         }
-        //     }
-        // }
-        // stage ('Backend Build') {
-        //     steps {
-        //         script {
-        //             docker.build('eatherv/backend:latest', './TextEditor/')
-        //         }
-        //     }
-        // }
-        // stage ('Backend DockerHub') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://index.docker.io/v1/', 'docker'){
-        //                 docker.image("eatherv/backend:latest").push()
-        //             }
-        //          }
-        //       }
-        //     }
-        // stage ('Backend Container') {
-        //     steps {
-        //         script {
-        //             sh "docker run --name backend -d -p 8080:80 eatherv/backend:latest"
-        //         }
-        //     }
-        // }
+        stage ('Backend Image Scanning') {
+            steps {
+                script {
+                    sh '''
+                        trivy image eatherv/backend:latest \
+                            --severity LOW,MEDIUM,HIGH \
+                            --quiet \
+                            --exit-code 0 \
+                            --format json -o backend_trivy_medium.json
+
+                        trivy image eatherv/backend:latest \
+                            --severity CRITICAL \
+                            --quiet \
+                            --exit-code 0 \
+                            --format json -o backend_trivy_high.json
+                            
+                    '''
+                }
+            }
+        }
+        
+        stage ('Backend DockerHub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker'){
+                        docker.image("eatherv/backend:latest").push()
+                    }
+                 }
+              }
+            }
+        
+        stage ('Backend Container') {
+            steps {
+                script {
+                    sh "docker run --name backend -d -p 8080:80 eatherv/backend:latest"
+                }
+            }
+        }
     }
 }
