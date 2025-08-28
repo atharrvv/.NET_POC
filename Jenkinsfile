@@ -29,16 +29,18 @@ pipeline {
                     '''
                 }
             }
-        }
-        post {
-            always {
+             post {
+                always {
                         sh '''
                             trivy convert --format template \
                                 --template "/usr/local/share/trivy/html.tpl"
                                 --output trivy_critical.html trivy_critical.json
                         '''
-                    }
-                }
+                 }
+            }
+        }
+        
+
         
     
 
