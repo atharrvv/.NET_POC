@@ -23,7 +23,7 @@ pipeline {
 
                         trivy image mcr.microsoft.com/mssql/server:2022-latest \
                             --severity CRITICAL \
-                            --quiet \
+
 
 
                     '''
