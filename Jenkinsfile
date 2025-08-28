@@ -18,10 +18,20 @@ pipeline {
                             --exit-code 0 \
                             --quiet \
                             --format json -o trivy_medium.json
+
+                        // Critical scan fails on findings
+                        trivy image eatherv/database/:latest \
+                        --severity CRITICAL \
+                        --exit-code 1 \
+                        --quiet \
+                        --format json -o trivy_critical.json
                     '''
                 }
             }
         }
+        
+    
+
         // stage ('Database DockerHub'){
         //     steps {
         //         script {
