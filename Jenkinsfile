@@ -15,6 +15,7 @@ pipeline {
                     sh '''
                         trivy image eatherv/database:latest \
                             --severity LOW,MEDIUM,HIGH \
+                            --exit-code 1 \
                             --quiet \
                             --format json -o trivy_medium.json
 
