@@ -19,7 +19,7 @@ pipeline {
                             --quiet \
                             --format json -o trivy_medium.json
 
-                        // For critical scanning
+                        
 
                         trivy image eatherv/database:latest \
                             --severity CRITICAL \
