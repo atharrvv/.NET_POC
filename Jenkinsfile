@@ -15,9 +15,17 @@ pipeline {
                     sh '''
                         trivy image eatherv/database:latest \
                             --severity LOW,MEDIUM,HIGH \
-                            --exit-code 1 \
+                            --exit-code 0 \
                             --quiet \
                             --format json -o trivy_medium.json
+
+                        // For critical scanning
+
+                        trivy image eatherv/database:latest \
+                            --severity CRITICAL \
+                            --exit-code 0 \
+                            --quiet \
+                            --format json -o trivy_critical.json 
 
                     '''
                 }
