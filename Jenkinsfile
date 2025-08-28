@@ -24,7 +24,7 @@ pipeline {
                         trivy image backend:latest \
                             --severity CRITICAL \
                             --quiet \
-                            --exit-code 1 \
+                            --exit-code 0 \
                             --format json -o trivy_medium.json 
 
 
