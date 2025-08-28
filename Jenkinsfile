@@ -23,7 +23,7 @@ pipeline {
 
                         trivy image eatherv/database:latest \
                             --severity CRITICAL \
-                            --exit-code 0 \
+                            --exit-code 1 \
                             --quiet \
                             --format json -o trivy_critical.json 
 
