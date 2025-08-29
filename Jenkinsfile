@@ -78,15 +78,15 @@ pipeline {
         //     }
         // }
         
-        // stage ('Backend DockerHub') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://index.docker.io/v1/', 'docker'){
-        //                 docker.image("eatherv/backend:latest").push()
-        //             }
-        //          }
-        //       }
-        //     }
+        stage ('Backend DockerHub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker'){
+                        docker.image("eatherv/backend:latest").push()
+                    }
+                 }
+              }
+            }
         
         stage ('Backend Container') {
             steps {
