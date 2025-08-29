@@ -105,9 +105,9 @@ pipeline {
                             --namespace app \
                             --report summary all
                         
-                        trivy k8s --severity CRITICAL \ 
+                        trivy k8s --severity CRITICAL \
                             --format json -o namespace_critical.json \
-                            --namespace app \ 
+                            --namespace app \
                             --report summary all
                     '''
                 }
@@ -123,10 +123,10 @@ pipeline {
                         --namespace app \
                         pod  python-application-dc45697c9-c9n9l
 
-                        trivy k8s --severity CRITICAL \ 
+                        trivy k8s --severity CRITICAL \
                         --format json -o pod_critical \
                         --namespace app \
-                        pod python-application-dc45697c9-c9n9l                     
+                        pod python-application-dc45697c9-c9n9l
                     '''
                 }
             }
