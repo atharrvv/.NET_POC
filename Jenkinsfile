@@ -14,8 +14,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        trivy image eatherv/database:latest \
-                            --severity LOW,MEDIUM,HIGH \
+                        trivy image eatherv/database:latest --severity LOW,MEDIUM,HIGH \
                             --exit-code 0 \
                             --quiet \
                             --format json -o database_trivy_medium.json
@@ -96,12 +95,13 @@ pipeline {
                 }
             }
         }
+        
         stage ('K8s namespaces scanning') {
             steps {
                 script {
                     sh '''                        
                         trivy k8s --severity LOW,MEDIUM,HIGH \
-                            --format json -o namespace_high.json \ 
+                            --format json -o namespace_high.json \
                             --namespace app \
                             --report summary all
                         
@@ -113,6 +113,7 @@ pipeline {
                 }
             }
         }
+        
         stage ('K8s pod scanning') {
             steps {
                 script {
