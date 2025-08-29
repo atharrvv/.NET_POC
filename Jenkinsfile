@@ -101,7 +101,6 @@ pipeline {
                 script {
                     sh '''  
                         kubectl proxy --port=8080 &
-                        trivy k8s all --server http://127.0.0.1:8080
                         
                         trivy k8s --severity LOW,MEDIUM,HIGH --format json -o namespace_high.json --namespace app --report summary all
                         
