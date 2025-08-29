@@ -49,13 +49,13 @@ pipeline {
         //     }
         // }
         
-        // stage ('Backend Build') {
-        //     steps {
-        //         script {
-        //             docker.build('eatherv/backend:latest', './TextEditor/')
-        //         }
-        //     }
-        // }
+        stage ('Backend Build') {
+            steps {
+                script {
+                    docker.build('eatherv/backend:latest', './TextEditor/')
+                }
+            }
+        }
 
         // stage ('Backend Image Scanning') {
         //     steps {
