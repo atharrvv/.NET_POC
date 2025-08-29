@@ -100,7 +100,7 @@ pipeline {
             steps {
                 script {
                     sh '''   
-                        kubectl proxy --port=8080 &
+                        kubectl proxy --port=8001 &
                         sleep 5
                         trivy k8s --severity LOW,MEDIUM,HIGH --format json -o namespace_high.json --namespace app --report summary all
                         
