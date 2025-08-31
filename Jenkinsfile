@@ -14,17 +14,24 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        trivy image eatherv/database:latest --severity LOW,MEDIUM,HIGH \
+
+                        trivy image eatherv/database:latest \
+                            --severity LOW,MEDIUM,HIGH \
                             --exit-code 0 \
                             --quiet \
-                            --format json -o database_trivy_medium.json
+                            --format template \
+                            --template "@/usr/local/share/trivy/html.tpl" \
+                            --output database_high_report.html
+
 
                         
                         trivy image eatherv/database:latest \
                             --severity CRITICAL \
                             --quiet \
                             --exit-code 0 \
-                            --format json -o database_trivy_critical.json 
+                            --format template \
+                            --template "@/usr/local/share/trivy/html.tpl" \
+                            --output database_critical_report.html
 
                     '''
                 }
@@ -65,13 +72,17 @@ pipeline {
                             --severity LOW,MEDIUM,HIGH \
                             --quiet \
                             --exit-code 0 \
-                            --format json -o backend_trivy_medium.json
+                            --format template \
+                            --template "@/usr/local/share/trivy/html.tpl" \
+                            --output backend_high_report.html
 
                         trivy image eatherv/backend:latest \
                             --severity CRITICAL \
                             --quiet \
                             --exit-code 0 \
-                            --format json -o backend_trivy_high.json
+                            --format template \
+                            --template "@/usr/local/share/trivy/html.tpl" \
+                            --output backend_critical_report.html
                             
                     '''
                 }
