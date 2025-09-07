@@ -51,4 +51,4 @@ pipeline:
                     repo: eatherv/database
                     tags:
                       - latest
-                    dockerfile: ./TextEditor/database/
+                    dockerfile: ./TextEditor/database/Dockerfile
