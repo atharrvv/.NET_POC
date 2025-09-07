@@ -149,3 +149,52 @@ pipeline:
                     tags:
                       - latest
                     dockerfile: ./TextEditor/Dockerfile
+              - parallel:
+                  - step:
+                      type: Background
+                      name: dind
+                      identifier: dind
+                      spec:
+                        connectorRef: account.harnessImage
+                        image: docker:dind
+                        shell: Sh
+                  - step:
+                      type: AquaTrivy
+                      name: AquaTrivy_1
+                      identifier: AquaTrivy_1
+                      spec:
+                        target:
+                          detection: auto
+                          type: container
+                        advanced:
+                          log:
+                            level: info
+                          args: {}
+                        privileged: true
+                        mode: orchestration
+                        config: default
+                        image:
+                          type: docker_v2
+                          name: eatherv/backend
+                          tag: latest
+                  - step:
+                      type: Grype
+                      name: Grype_1
+                      identifier: Grype_1
+                      spec:
+                        target:
+                          detection: auto
+                          type: container
+                        advanced:
+                          log:
+                            level: info
+                          args: {}
+                        privileged: true
+                        mode: orchestration
+                        config: default
+                        image:
+                          type: docker_v2
+                          name: eatherv/backend
+                          tag: latest
+          sharedPaths:
+            - /var/run
