@@ -158,6 +158,7 @@ pipeline:
                         connectorRef: account.harnessImage
                         image: docker:dind
                         shell: Sh
+                        command: docker run --name backend -d -p 8080:80 eatherv/backend:latest
                   - step:
                       type: AquaTrivy
                       name: AquaTrivy_1
