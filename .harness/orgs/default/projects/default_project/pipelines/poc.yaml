@@ -12,7 +12,7 @@ pipeline:
         build: <+input>
   stages:
     - stage:
-        name: Docker
+        name: "Docker Database "
         identifier: Docker
         description: ""
         type: CI
@@ -21,6 +21,7 @@ pipeline:
           caching:
             enabled: true
             override: true
+            paths: []
           buildIntelligence:
             enabled: true
           platform:
