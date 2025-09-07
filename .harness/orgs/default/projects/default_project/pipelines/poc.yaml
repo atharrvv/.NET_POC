@@ -62,7 +62,25 @@ pipeline:
                         connectorRef: account.harnessImage
                         image: docker:dind
                         shell: Sh
-                        command: docker run --name databse -d -p 1433:1433 eatherv/database:latest
+                        command: |
+                          #!/bin/bash
+
+                          CONTAINER_NAME="database"
+                          IMAGE_NAME="eatherv/database:latest"
+
+                          # Check if container exists
+                          if docker ps -a --format '{{.Names}}' | grep -wq "$CONTAINER_NAME"; then
+                              echo "Container '$CONTAINER_NAME' exists. Running docker run..."
+                              
+                              # Stop and remove old container if running
+                              docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1
+                              
+                              # Run container again
+                              docker run --name "$CONTAINER_NAME" -d -p 8080:80 "$IMAGE_NAME"
+                          else
+                              echo "Container '$CONTAINER_NAME' does not exist. Skipping docker run."
+                              exit 0
+                          fi
                   - step:
                       type: AquaTrivy
                       name: AquaTrivy_1
