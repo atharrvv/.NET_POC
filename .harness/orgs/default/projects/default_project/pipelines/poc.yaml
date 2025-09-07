@@ -100,3 +100,33 @@ pipeline:
                           name: eatherv/database
           sharedPaths:
             - /var/run
+    - stage:
+        name: Docker Backend
+        identifier: Docker_Backend
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: Backend Build
+                  identifier: Backend_Build
+                  spec:
+                    connectorRef: Dockerhub
+                    repo: eatherv/backend:latest
+                    tags:
+                      - latest
+                    dockerfile: ./TextEditor/Dockerfile
