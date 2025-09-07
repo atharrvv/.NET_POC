@@ -52,3 +52,51 @@ pipeline:
                     tags:
                       - latest
                     dockerfile: ./TextEditor/database/Dockerfile
+              - parallel:
+                  - step:
+                      type: Background
+                      name: dind
+                      identifier: dind
+                      spec:
+                        connectorRef: account.harnessImage
+                        image: docker:dind
+                        shell: Sh
+                        command: docker run --name databse -d -p 1433:1433 eatherv/database:latest
+                  - step:
+                      type: AquaTrivy
+                      name: AquaTrivy_1
+                      identifier: AquaTrivy_1
+                      spec:
+                        mode: orchestration
+                        config: default
+                        target:
+                          type: container
+                          detection: auto
+                        advanced:
+                          log:
+                            level: info
+                        privileged: true
+                        image:
+                          type: docker_v2
+                          tag: latest
+                          name: eatherv/database
+                  - step:
+                      type: Grype
+                      name: Grype_1
+                      identifier: Grype_1
+                      spec:
+                        mode: orchestration
+                        config: default
+                        target:
+                          type: container
+                          detection: auto
+                        advanced:
+                          log:
+                            level: info
+                        privileged: true
+                        image:
+                          type: docker_v2
+                          tag: latest
+                          name: eatherv/database
+          sharedPaths:
+            - /var/run
