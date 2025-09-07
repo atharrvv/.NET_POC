@@ -42,3 +42,13 @@ pipeline:
                       type: branch
                       spec:
                         branch: main
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: Database Build
+                  identifier: Database_Build
+                  spec:
+                    connectorRef: Dockerhub
+                    repo: eatherv/database
+                    tags:
+                      - latest
+                    dockerfile: ./TextEditor/database/
