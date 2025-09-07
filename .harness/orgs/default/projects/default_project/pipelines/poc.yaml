@@ -76,7 +76,7 @@ pipeline:
                               docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1
                               
                               # Run container again
-                              docker run --name "$CONTAINER_NAME" -d -p 8080:80 "$IMAGE_NAME"
+                              docker run --name "$CONTAINER_NAME" -d -p 1433:1433 "$IMAGE_NAME"
                           else
                               echo "Container '$CONTAINER_NAME' does not exist. Skipping docker run."
                               exit 0
