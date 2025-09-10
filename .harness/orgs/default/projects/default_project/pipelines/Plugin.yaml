@@ -41,4 +41,4 @@ pipeline:
                     settings:
                       repo_url: https://github.com/atharrvv/URL.git
                       branch: main
-                      path: .
+                      path: /
