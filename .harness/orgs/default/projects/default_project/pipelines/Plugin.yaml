@@ -32,6 +32,13 @@ pipeline:
           execution:
             steps:
               - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    shell: Sh
+                    command: rm -r URL
+              - step:
                   type: Plugin
                   name: Plugin_1
                   identifier: Plugin_1
