@@ -41,3 +41,12 @@ pipeline:
                     settings:
                       repo_url: https://github.com/atharrvv/URL.git
                       branch: main
+              - step:
+                  type: Plugin
+                  name: Plugin_2
+                  identifier: Plugin_2
+                  spec:
+                    connectorRef: Dockerhub
+                    image: plugins/download
+                    settings:
+                      source: https://github.com/atharrvv/URL.git
