@@ -1,0 +1,44 @@
+pipeline:
+  name: Plugin
+  identifier: Plugin
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: GitHub
+        repoName: .NET_POC
+        build: <+input>
+  stages:
+    - stage:
+        name: Plugin
+        identifier: Plugin
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Plugin
+                  name: Plugin_1
+                  identifier: Plugin_1
+                  spec:
+                    connectorRef: Dockerhub
+                    image: eatherv/git-clone
+                    settings:
+                      repo_url: https://github.com/atharrvv/URL.git
+                      branch: main
+                      path: .
