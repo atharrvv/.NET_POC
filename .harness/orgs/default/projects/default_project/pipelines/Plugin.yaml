@@ -37,7 +37,7 @@ pipeline:
                   identifier: Plugin_1
                   spec:
                     connectorRef: Dockerhub
-                    image: eatherv/git-clone:0.3
+                    image: eatherv/git-clone:0.2
                     settings:
                       repo_url: https://github.com/atharrvv/URL.git
                       branch: main
